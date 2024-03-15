@@ -19,6 +19,17 @@ int	check_word(char c)
 	return (1);
 }
 
+int check_meta_char(char c)
+{
+	if (c == '&' || c == '|' || c == '<' || c == '>')
+		return (1);
+	else if (c == '(' || c == ')')
+		return (1);
+	else if (c == ' '|| (c >= 9 && c <= 13))
+		return (1);
+	return (0);
+}
+
 int	check_quote(char *str, char c)
 {
 	int	i;
@@ -42,7 +53,7 @@ int	check_quote_cnt(char *str, char c)
 	len = 0;
 	if (!ft_strchr(str, c))
 		return (0);
-	while (str[len] && check_word(str[len]))
+	while (str[len])
 		len++;
 	i = -1;
 	cnt = 0;
@@ -59,34 +70,67 @@ int	check_quote_cnt(char *str, char c)
 
 void	tokenize_word_branch(char *str, t_token *head, int *idx)
 {
-	if (str[0] == '\'' || str[0] == '\"')
-	{
-		tokenize_quote(str, head, idx, str[0]);
-		return ;
-	}
-	else
-		tokenize_word(str, head, idx);
-}
-
-void	tokenize_quote(char *str, t_token *head, int *idx, char c)
-{
 	t_token	*token;
-	char	*content;
+	char	*ret;
+	char	*tmp;
+	char	*quote_str;
 	int		len;
 
-	if (!check_quote_cnt(str, c) || !check_quote_cnt(str, c))
+	len = 0;
+	quote_str = NULL;
+	while (str[len] && !check_meta_char(str[len]))
 	{
-		null_guard(content = ft_substr(str, 0, 1));
-		token = create_token(content, T_ERROR);
-		add_token(&head, token);
-		return ;
-	}
-	len = 1;
-	while (str[len] && str[len] != c)
+		if (str[len] == '\'' || str[len] == '\"')
+		{
+			if (!check_quote_cnt(str, str[len]))
+			{
+				tokenize_error(str, head, idx, len + 1);
+				return ;
+			}
+			else
+			{
+				quote_str = tokenize_quote(str + len, idx, str[len]);
+				break ;
+			}
+		}
 		len++;
-	content = ft_substr(str, 0, ++len);
-	null_guard(content);
-	token = create_token(content, T_WORD);
-	add_token(&head, token);
-	*idx += (len - 1);
+	}
+	null_guard(ret = ft_substr(str, 0, len));
+	if (quote_str == NULL)
+	{
+		token = create_token(ret, T_WORD);
+		add_token(&head, token);
+		*idx += ((int)ft_strlen(ret) - 1);
+	}
+	else
+	{
+		null_guard(tmp = ft_strjoin(ret, quote_str));
+		free(ret);
+		free(quote_str);
+		token = create_token(tmp, T_WORD);
+		add_token(&head, token);
+		*idx += ((int)ft_strlen(tmp) -1);
+	}
+}
+
+char	*tokenize_quote(char *str, int *idx, char c)
+{
+	char	*content;
+	int		len;
+	int		in_quote;
+
+	(void)idx;
+	len = 0;
+	in_quote = 0;
+	while (str[len])
+	{
+		if (str[len] == c)
+			in_quote = !in_quote;
+		else if (!in_quote && check_meta_char(str[len]))
+			break ;
+		len++;
+	}
+	null_guard(content = ft_substr(str, 0, len));
+	// *idx += (len - 1);
+	return (content);
 }

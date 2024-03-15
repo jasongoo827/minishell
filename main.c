@@ -51,7 +51,7 @@ static void	main_loop(t_token *token_list, t_node *root, t_dict *dic)
 			continue ;
 		add_history(input);
 		tokenize(input, token_list);
-		// print_tokenlist(token_list);
+		print_tokenlist(token_list);
 		make_tree(root, &(token_list->next));
 		print_tree(root);
 		all_re_vec = root_re_vec(root, dic, &re_flag);

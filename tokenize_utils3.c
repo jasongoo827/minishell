@@ -68,17 +68,12 @@ void	tokenize_word_quote(char *str, t_token *head, int *idx)
 	}
 }
 
-void	tokenize_error(char *str, t_token *head, int *idx)
+void	tokenize_error(char *str, t_token *head, int *idx, int len)
 {
 	t_token	*token;
 	char	*content;
-	int		len;
 
-	len = 0;
-	while (str[len] && check_word(str[len]) && str[len] != ' ')
-		len++;
-	content = ft_substr(str, 0, len);
-	null_guard(content);
+	null_guard(content = ft_substr(str, 0, len));
 	token = create_token(content, T_ERROR);
 	add_token(&head, token);
 	*idx += (len - 1);
