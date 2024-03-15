@@ -58,12 +58,11 @@ int		check_word(char c);
 int		check_char(char *str, char c);
 int		check_quote_cnt(char *str, char c);
 void	tokenize_word_branch(char *str, t_token *head, int *idx);
-char	*tokenize_quote(char *str, int *idx, char c);
+char	*tokenize_quote(char *str, char c);
 
 // tokenize_utils3.c
 int		check_word_quote_space(char *str, char c);
-void	tokenize_word_quote(char *str, t_token *head, int *idx);
-void	tokenize_word(char *str, t_token *head, int *idx);
+void	tokenize_word(char *ret, char *q_str, t_token *head, int *idx);
 void	tokenize_error(char *str, t_token *head, int *idx, int len);
 void	update_parent_token(t_token *head);
 
