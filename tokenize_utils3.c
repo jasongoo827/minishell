@@ -12,19 +12,14 @@
 
 #include "token.h"
 
-int	check_word_quote_space(char *str, char c)
+int	check_meta_char(char c)
 {
-	int		i;
-	char	*pos;
-
-	i = 0;
-	pos = ft_strchr(str, c);
-	while (str != pos)
-	{
-		if (*str == ' ')
-			return (1);
-		str++;
-	}
+	if (c == '&' || c == '|' || c == '<' || c == '>')
+		return (1);
+	else if (c == '(' || c == ')')
+		return (1);
+	else if (c == ' ' || (c >= 9 && c <= 13))
+		return (1);
 	return (0);
 }
 
@@ -46,7 +41,7 @@ void	tokenize_word(char *ret, char *q_str, t_token *head, int *idx)
 		free(q_str);
 		token = create_token(tmp, T_WORD);
 		add_token(&head, token);
-		*idx += ((int)ft_strlen(tmp) -1);
+		*idx += ((int)ft_strlen(tmp) - 1);
 	}
 }
 

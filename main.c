@@ -14,28 +14,6 @@
 
 volatile sig_atomic_t	g_last_signal = 0;
 
-void	print_tree(t_node *root)
-{
-	int	i;
-	char	*tree_category[15] = {
-		"TREE_ROOT", "TREE_LIST", "TREE_LPARENT", "TREE_RPARENT",
-		"TREE_AND", "TREE_OR", "TREE_PIPELINE", "TREE_CMD",
-		"TREE_PIPE", "TREE_SIMPLE_CMD", "TREE_SUBSHELL",
-		"TREE_SIMPLE_CMD_ELEMENT", "TREE_WORD", "TREE_RE", "TREE_ERROR"
-	};
-	t_node	*node;
-	// t_cmdlst *lst;
-
-	i = -1;
-	while (++i < root->child->size)
-	{
-		node = (t_node *)root->child->arr[i];
-		printf("symbol: %s value: %s\n", tree_category[node->category],
-		node->token->content);
-		print_tree(node);
-	}
-}
-
 static void	main_loop(t_token *token_list, t_node *root, t_dict *dic)
 {
 	t_vector	*all_re_vec;
@@ -51,9 +29,7 @@ static void	main_loop(t_token *token_list, t_node *root, t_dict *dic)
 			continue ;
 		add_history(input);
 		tokenize(input, token_list);
-		// print_tokenlist(token_list);
 		make_tree(root, &(token_list->next));
-		// print_tree(root);
 		all_re_vec = root_re_vec(root, dic, &re_flag);
 		if (here_doc(all_re_vec, dic) < 0)
 		{
@@ -73,6 +49,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_node		*root;
 	t_dict		*dic;
 
+	// necessary??
 	(void)argc;
 	(void)argv;
 	dic = init_dict();

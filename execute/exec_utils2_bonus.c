@@ -38,7 +38,7 @@ int	exec_pline(t_node *root, t_node *node, t_dict *dic)
 	if (dic->exec_flag)
 		return (1);
 	if (!check_pipe(node, dic) || !check_error_node(root, dic) || \
-	!check_subshell(node, dic))
+	!check_subshell(node, dic) || !check_after_subshell(node, dic))
 		return (-1);
 	if (!ft_strncmp(node->token->content, "(", 2))
 	{

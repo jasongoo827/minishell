@@ -12,72 +12,45 @@
 
 #include "token_bonus.h"
 
-int	check_word_quote_space(char *str, char c)
+int	check_meta_char(char c)
 {
-	int		i;
-	char	*pos;
-
-	i = 0;
-	pos = ft_strchr(str, c);
-	while (str != pos)
-	{
-		if (*str == ' ')
-			return (1);
-		str++;
-	}
+	if (c == '&' || c == '|' || c == '<' || c == '>')
+		return (1);
+	else if (c == '(' || c == ')')
+		return (1);
+	else if (c == ' ' || (c >= 9 && c <= 13))
+		return (1);
 	return (0);
 }
 
-void	tokenize_word(char *str, t_token *head, int *idx)
+void	tokenize_word(char *ret, char *q_str, t_token *head, int *idx)
 {
 	t_token	*token;
-	char	*content;
-	int		len;
+	char	*tmp;
 
-	len = 0;
-	while (str[len] && check_word(str[len]) && str[len] != ' ')
-		len++;
-	content = ft_substr(str, 0, len);
-	null_guard(content);
-	token = create_token(content, T_WORD);
-	add_token(&head, token);
-	*idx += (len - 1);
-}
-
-void	tokenize_word_quote(char *str, t_token *head, int *idx)
-{
-	t_token	*token;
-	char	*content;
-	int		len;
-	char	c;
-
-	find_quote_char(str, &c);
-	if (check_word_quote_space(str, c))
-		tokenize_word(str, head, idx);
+	if (q_str == NULL)
+	{
+		token = create_token(ret, T_WORD);
+		add_token(&head, token);
+		*idx += ((int)ft_strlen(ret) - 1);
+	}
 	else
 	{
-		len = 0;
-		while (str[len] && check_word(str[len]))
-			len++;
-		content = ft_substr(str, 0, len);
-		null_guard(content);
-		token = create_token(content, T_WORD);
+		null_guard(tmp = ft_strjoin(ret, q_str));
+		free(ret);
+		free(q_str);
+		token = create_token(tmp, T_WORD);
 		add_token(&head, token);
-		*idx += (len - 1);
+		*idx += ((int)ft_strlen(tmp) - 1);
 	}
 }
 
-void	tokenize_error(char *str, t_token *head, int *idx)
+void	tokenize_error(char *str, t_token *head, int *idx, int len)
 {
 	t_token	*token;
 	char	*content;
-	int		len;
 
-	len = 0;
-	while (str[len] && check_word(str[len]) && str[len] != ' ')
-		len++;
-	content = ft_substr(str, 0, len);
-	null_guard(content);
+	null_guard(content = ft_substr(str, 0, len));
 	token = create_token(content, T_ERROR);
 	add_token(&head, token);
 	*idx += (len - 1);

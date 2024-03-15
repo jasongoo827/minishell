@@ -19,31 +19,6 @@ int	check_word(char c)
 	return (1);
 }
 
-int check_meta_char(char c)
-{
-	if (c == '&' || c == '|' || c == '<' || c == '>')
-		return (1);
-	else if (c == '(' || c == ')')
-		return (1);
-	else if (c == ' '|| (c >= 9 && c <= 13))
-		return (1);
-	return (0);
-}
-
-int	check_quote(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && check_word(str[i]))
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 int	check_quote_cnt(char *str, char c)
 {
 	int	len;

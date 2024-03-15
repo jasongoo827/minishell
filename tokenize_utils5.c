@@ -91,21 +91,3 @@ void	tokenize_branch(char *input, t_token *head, int *i, int *flag)
 	else if (input[*i] == ')')
 		tokenize_parent(input + *i, head, T_RPARENT);
 }
-
-void	print_tokenlist(t_token *head)
-{
-	t_token	*token;
-	char	*token_category[12] = {
-		"T_WORD", "T_PIPE", "T_OR", "T_AND",
-		"T_IN_RE", "T_OUT_RE", "T_HERE_RE", "T_APPEND_RE",
-		"T_LPARENT", "T_RPARENT", "T_ERROR", "T_HEAD"
-	};
-
-	token = head->next;
-	while (token != NULL)
-	{
-		printf("%s: content: %s \n", token_category[token->category],
-		token->content);
-		token = token->next;
-	}
-}

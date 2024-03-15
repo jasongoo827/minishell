@@ -117,6 +117,7 @@ t_node		*find_list_node(t_node *node);
 // exec_utils3.c
 int			check_subshell(t_node *root, t_dict *dic);
 int			check_between_pipe(t_node *root, t_dict *dic, int i);
+int			check_after_subshell(t_node *root, t_dict *dic);
 
 // exec.c
 void		exec_cmd(t_cmdlst *lst, t_dict *dic);

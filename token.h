@@ -55,16 +55,15 @@ void	tokenize_parent(char *str, t_token *head, t_token_category category);
 
 // tokenize_utils2.c
 int		check_word(char c);
-int		check_char(char *str, char c);
 int		check_quote_cnt(char *str, char c);
 void	tokenize_word_branch(char *str, t_token *head, int *idx);
 char	*tokenize_quote(char *str, char c);
 
 // tokenize_utils3.c
-int		check_word_quote_space(char *str, char c);
 void	tokenize_word(char *ret, char *q_str, t_token *head, int *idx);
 void	tokenize_error(char *str, t_token *head, int *idx, int len);
 void	update_parent_token(t_token *head);
+int		check_meta_char(char c);
 
 // tokenize_utils4.c
 void	tokenize_meta_char(char *str, t_token *head, \
@@ -80,6 +79,5 @@ void	find_quote_char(char *str, char *c);
 void	tokenize_meta_branch(char *str, t_token *head, t_token_category c, \
 int *flag);
 void	tokenize_branch(char *input, t_token *head, int *i, int *flag);
-void	print_tokenlist(t_token *head);
 
 #endif
