@@ -6,7 +6,7 @@
 /*   By: mkong <mkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 09:51:36 by jgoo              #+#    #+#             */
-/*   Updated: 2024/03/14 21:06:30 by mkong            ###   ########.fr       */
+/*   Updated: 2024/03/15 14:52:17 by mkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ static void	main_loop(t_token *token_list, t_node *root, t_dict *dic)
 			continue ;
 		add_history(input);
 		tokenize(input, token_list);
-		print_tokenlist(token_list);
+		// print_tokenlist(token_list);
 		make_tree(root, &(token_list->next));
-		print_tree(root);
+		// print_tree(root);
 		all_re_vec = root_re_vec(root, dic, &re_flag);
 		if (here_doc(all_re_vec, dic) < 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: mkong <mkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 20:30:36 by mkong             #+#    #+#             */
-/*   Updated: 2024/03/14 13:30:07 by mkong            ###   ########.fr       */
+/*   Updated: 2024/03/15 15:45:06 by mkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ static pid_t	exec_cnode(t_cmdlst *lst, t_cnode *cnd)
 		fds[1] = dup(1);
 		if (re_handler(cnd->re_vec, cnd->old_dic, 1) == 0)
 			lst->dic->exit_status = exec_builtin(cnd, 1, lst->pre_exit_status);
-		dup2(fds[0], 0);
-		dup2(fds[1], 1);
+		check_fail(dup2(fds[0], 0));
+		check_fail(dup2(fds[1], 1));
+		check_fail(close(fds[0]));
+		check_fail(close(fds[1]));
 	}
 	else
 	{
