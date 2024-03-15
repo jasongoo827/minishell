@@ -118,5 +118,9 @@ int	check_redirect_syntax(char *content)
 		return (-1);
 	if (ft_strncmp(content, "&", 2) == 0)
 		return (-1);
+	if (ft_strncmp(content, "(", 2) == 0)
+		return (-1);
+	if (ft_strncmp(content, ")", 2) == 0)
+		return (-1);
 	return (1);
 }
