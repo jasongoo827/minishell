@@ -40,6 +40,7 @@ Your program has to implement:
 - [Execution](md/Execute.md)
 - [Signal](md/Signal.md)
 - [Bonus](md/Bonus.md)
+- [etc](md/etc.md)
 
 ## 구현 시 필수적으로 참고해야 할 사이트
 
