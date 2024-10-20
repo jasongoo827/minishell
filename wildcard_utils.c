@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkong <mkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jgoo <jgoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 09:52:51 by jgoo              #+#    #+#             */
-/*   Updated: 2024/03/13 17:48:33 by mkong            ###   ########.fr       */
+/*   Updated: 2024/10/21 01:47:01 by jgoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,12 @@ int	check_mixed_wc(char *str, char *pattern, char **patterns)
 	while (patterns[++i] != NULL)
 	{
 		len = ft_strlen(patterns[i]);
+		// 맨 앞이 '*'로 시작하지 않을 때, 패턴 확인
 		if (i == 0 && find_pattern_front(str, pattern, patterns[i], len))
 			return (0);
 		else if (patterns[i + 1] != NULL)
 		{
+			// str에 패턴 있는지 확인
 			if (find_pattern_in_str(&str, patterns[i], len) < 0)
 				return (0);
 			continue ;
